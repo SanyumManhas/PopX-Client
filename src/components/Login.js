@@ -8,7 +8,9 @@ import { setUser } from "../Reducers/userSlice";
 export default function Login(){
     const [em,setem] = useState("");
     const [pass,setpass] = useState("");
-    const [valid,setvalid] = useState(false)
+    const [valid,setvalid] = useState(false);
+    const [loading,setloading] = useState(false);
+    
     const nav = useNavigate();
 
     const dispatch = useDispatch(); 
@@ -23,6 +25,7 @@ export default function Login(){
     const handlelogin=async(e)=>{
         e.preventDefault();
         try{
+            setloading(true);
             const logindata = {
                 em,
                 pass
@@ -43,6 +46,9 @@ export default function Login(){
         {
             console.log(e.message);
             toast.error("Server error while trying to log in!")
+        }
+        finally{
+            setloading(false);
         }
     }
 
@@ -89,8 +95,10 @@ export default function Login(){
                         </span>
                     </div>
                     <br/>
-
-                    <button type="submit" className='btn mb-2'  style={valid?{backgroundColor:`#6C25FF`, color:'white'}:{backgroundColor:`#CBCBCB`, color:'white'}} onClick={handlelogin}>Login</button>
+                                {loading?<div className="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>:
+                <button type="submit" className='btn mb-2'  style={valid?{backgroundColor:`#6C25FF`, color:'white'}:{backgroundColor:`#CBCBCB`, color:'white'}} onClick={handlelogin}>Login</button>}
          
                 </form>
             
