@@ -40,7 +40,7 @@ export default function Signup(){
         }
         catch(e)
         {
-            toast.error(result.data);
+            toast.error(e.message);
         }
         finally{
             setloading(false);
