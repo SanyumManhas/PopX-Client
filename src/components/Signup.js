@@ -11,10 +11,12 @@ export default function Signup(){
     const [agency,setagency] = useState(false);
     const phoneregex = /^\+?[1-9][0-9]{7,14}$/;
     const emailregex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const [loading,setloading] = useState(false);
 
     const handleSignup=async (e)=>{
         e.preventDefault();
         try{
+            setloading(true);
             if(phoneregex.test(phone) && emailregex.test(email))
             {
             const userData = {
@@ -38,7 +40,10 @@ export default function Signup(){
         }
         catch(e)
         {
-            toast.error("Server Error!, Please Check Server...")
+            toast.error(result.data);
+        }
+        finally{
+            setloading(false);
         }
     }
 
@@ -152,8 +157,10 @@ export default function Signup(){
                             <input type="radio" style={{width:'22px', height:'22px'}} name="agency" defaultChecked={true} onChange={()=>setagency(false)}/>&nbsp;&nbsp;No
                         </label>
                     </div>
-
-                    <button type="submit" className='btn mb-2 mt-5'  style={{backgroundColor:'#6C25FF', color:'white'}} onClick={handleSignup}>Create Account</button>
+{loading?<div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>:
+                    <button type="submit" className='btn mb-2 mt-5'  style={{backgroundColor:'#6C25FF', color:'white'}} onClick={handleSignup}>Create Account</button>}
                 </form>
             
             </div>
