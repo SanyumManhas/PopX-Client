@@ -8,9 +8,17 @@ import { setUser } from "../Reducers/userSlice";
 export default function Login(){
     const [em,setem] = useState("");
     const [pass,setpass] = useState("");
+    const [valid,setvalid] = useState(false)
     const nav = useNavigate();
 
     const dispatch = useDispatch(); 
+
+     useEffect(()=>{
+        if(em.length > 0 && pass.length > 0)
+        {
+            setvalid(true);
+        }
+    },[em,pass])
 
     const handlelogin=async(e)=>{
         e.preventDefault();
@@ -82,7 +90,8 @@ export default function Login(){
                     </div>
                     <br/>
 
-                    <button type="submit" className='btn mb-2'  style={{backgroundColor:'#CBCBCB', color:'white'}} onClick={handlelogin}>Login</button>
+                    <button type="submit" className='btn mb-2'  style={valid?{backgroundColor:`#6C25FF`, color:'white'}:{backgroundColor:`#CBCBCB`, color:'white'}} onClick={handlelogin}>Login</button>
+         
                 </form>
             
             </div>
